@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<script src="Scripts/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+       
+
+                $.ajax({
+                    url: 'usersService.asmx/listuser',
+                    
+                    method: 'Post',
+                    dataType: 'xml',
+                    success: function (data) {
+                        
+                        var users = data.getElementsByTagName("user");
+                        for (var y = 0; y < users.length; y++) {
+                            var tr = document.createElement("tr");
+                            for (var i = 1; i < users[y].children.length; i++) {
+                                
+                                var td = document.createElement("td");
+                                td.innerHTML = users[y].children[i].innerHTML
+                                tr.appendChild(td);
+                                document.getElementById("tablebody").appendChild(tr);
+                                console.log(users[y].children[i])
+                            }
+
+                        }  
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+      
+</script>
+<body>
+
+    <h2>users table</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    username
+                </th>
+                <th>
+                    firstname
+                </th>
+                <th>
+                    lastname
+                </th>
+                <th>
+                    date
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody id="tablebody">
+
+
+
+
+        </tbody>
+    </table>
+
+</body>
+</html>

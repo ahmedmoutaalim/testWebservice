@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="Scripts/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnGetUser').click(function () {
+
+                var userId = $('#txtId').val();
+
+                $.ajax({
+                    url: 'usersService.asmx/listuser',
+                    data: { userid: userId },
+                    method: 'Post',
+                    dataType: 'xml',
+                    success: function (data) {
+                        var jQueryXml = $(data);
+                        $('#txtuserName').val(jQueryXml.find('username').text());
+                        $('#txtPassword').val(jQueryXml.find('Password').text());
+
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="font-family:Arial">
+    ID : <input id="txtId" type="text" style="width:100px" />
+    <input type="button" id="btnGetUser" value="Get user" />
+    <br /><br />
+    <table border="1" style="border-collapse:collapse">
+        <tr>
+            <td>Name</td>
+            <td><input id="txtuserName" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input id="txtPassword" type="text" /></td>
+        </tr>
+      
+    </table>
+</body>
+</html>
